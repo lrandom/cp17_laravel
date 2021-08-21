@@ -52,3 +52,16 @@ Route::get('/list-product', [\App\Http\Controllers\ProductController::class, 'li
 
 Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'contact']);
 Route::post('/do-contact', [\App\Http\Controllers\ContactController::class, 'doContact'])->name('do-contact');
+
+Route::get('/about-us', function () {
+    return view('about-us');
+});
+
+
+Route::get('/list-shoes', function () {
+    $products = \Illuminate\Support\Facades\DB::table('products')->get();
+    foreach ($products as $product){
+        echo $product->id;
+        echo $product->name;
+    }
+});

@@ -15,13 +15,13 @@
             {{$error}}
         @endforeach
     @endif
-        <br>
+    <br>
     @csrf
-    <input type="text" name="fullName" placeholder="full name"/>
+    <input type="text" name="fullName" placeholder="full name" value="{{old('fullName')}}"/>
     {{$errors->first('fullName')}}
-        @error('fullName')
-            {{$message}}
-        @enderror
+    @error('fullName')
+    {{$message}}
+    @enderror
 
     <br>
     <input type="text" name="address" placeholder="address"/>
@@ -35,7 +35,7 @@
     <textarea name="message" id="" cols="30" rows="10" placeholder="Message"></textarea>
     {{$errors->first('message')}}
 
-        <br>
+    <br>
     <button>Submit</button>
 </form>
 </body>
