@@ -82,4 +82,11 @@ class ProductController extends Controller
         $obj->delete();
     }
 
+    public function paginate()
+    {
+        $products = Product::paginate(10);
+        $products->appends(['q' => 'Name']);
+        return view('products', compact('products'));
+    }
+
 }

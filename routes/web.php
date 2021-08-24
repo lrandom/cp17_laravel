@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -125,8 +126,8 @@ Route::get('/insert-form', function () {
 });
 
 Route::get('/update', function () {
-    DB::table('products')->where('id',11)->update([
-        'name'=>'Puma Suedues'
+    DB::table('products')->where('id', 11)->update([
+        'name' => 'Puma Suedues'
     ]);
 });
 
@@ -136,11 +137,11 @@ Route::get('/delete', function () {
 
 
 Route::post('/do-insert', function (Request $request) {
-   $price= $request->input('price');
-   $name=  $request->name;
-   $content=  $request->content;
-   $category_id= $request->category_id;
-   $keyword = $request->keyword;
+    $price = $request->input('price');
+    $name = $request->name;
+    $content = $request->content;
+    $category_id = $request->category_id;
+    $keyword = $request->keyword;
 
     //$request->all();
 
@@ -149,7 +150,7 @@ Route::post('/do-insert', function (Request $request) {
         'name' => $name,
         'content' => $content,
         'category_id' => $category_id,
-            'keyword'=>$keyword
+        'keyword' => $keyword
     ]);
 
     DB::table('products')->insert([
@@ -157,7 +158,7 @@ Route::post('/do-insert', function (Request $request) {
         'name' => $request->name,
         'content' => $request->content,
         'category_id' => $request->category_id,
-        'keyword'=>$request->keyword
+        'keyword' => $request->keyword
     ]);
 
     $all = $request->all();
@@ -179,3 +180,17 @@ Route::get('/update-orm', [\App\Http\Controllers\ProductController::class, 'upda
 ]);
 
 Route::get('/delete', [\App\Http\Controllers\ProductController::class, 'delete']);
+Route::get('/paginate', [\App\Http\Controllers\ProductController::class, 'paginate']);
+
+Route::get('/find-one-user/{id}', function ($id) {
+    /*$users = \App\Models\User::where('id', '<', 3)->get();
+    foreach ($users as $user) {
+        echo $user->id . '<br>';
+        echo $user->name . '<br>';
+        echo $user->email . '<br>';
+        echo $user->userInfo->address . '<br>';
+    }*/
+    $userInfo = \App\Models\UserInfo::find(1);
+    echo $userInfo->user->name;
+
+});
