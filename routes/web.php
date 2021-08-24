@@ -166,3 +166,16 @@ Route::post('/do-insert', function (Request $request) {
 })->name('do-insert');
 
 
+Route::get('/list-products', [\App\Http\Controllers\ProductController::class, 'listAll',
+]);
+
+Route::
+get('/get-where', [\App\Http\Controllers\ProductController::class, 'getWhere']);
+
+Route::get('/insert-orm', [\App\Http\Controllers\ProductController::class, 'insert',
+]);
+
+Route::get('/update-orm', [\App\Http\Controllers\ProductController::class, 'update',
+]);
+
+Route::get('/delete', [\App\Http\Controllers\ProductController::class, 'delete']);
