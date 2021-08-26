@@ -194,3 +194,34 @@ Route::get('/find-one-user/{id}', function ($id) {
     echo $userInfo->user->name;
 
 });
+
+Route::get('/1-n', function () {
+    $category = \App\Models\Category::find(1);
+    $products = $category->products;
+    foreach ($products as $product) {
+        echo $product->id . '-' . $product->name."<br>";
+    }
+});
+
+Route::get('/n-1', function () {
+    //$category = \App\Models\Category::find(1);
+    $products = \App\Models\Product::all();
+    foreach ($products as $product) {
+        echo $product->id . '-' . $product->name . '-danh mục:' . $product->category->name.'<br>';
+    }
+});
+
+
+Route::get('/n-n', function () {
+    $order = \App\Models\Order::find(1);
+    $products = $order->products;
+    foreach ($products as $product) {
+        echo $product->name . '<br>';
+    }
+
+    $product = \App\Models\Product::find(1);
+    $orders = $product->orders;
+    foreach ($orders as $order) {
+        echo $order->id . '-' . $order->total.'<br>';
+    }
+});

@@ -18,4 +18,14 @@ class Product extends Model
       "keyword",
       "content"
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_products', 'order_id', 'product_id');
+    }
 }

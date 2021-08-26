@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class AlterOrderAddTotalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_products', function (Blueprint $table) {
-            $table->id();
-            $table->integer('product_id');
-            $table->integer('order_id');
-            $table->timestamps();
+        //
+        Schema::table('orders',function (Blueprint $table) {
+            $table->double('total');
         });
     }
 
@@ -28,6 +26,9 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_products');
+        //
+        Schema::table('orders',function (Blueprint $table) {
+            $table->removeColumn('total');
+        });
     }
 }
