@@ -9,8 +9,16 @@ class Category extends Model
 {
     use HasFactory;
 
-    function products()
+/*    function products()
     {
         return $this->hasMany(Product::class);
+    }*/
+
+    public function products()
+    {
+        return $this->morphToMany(Product::class,
+            'genericable','generics',
+            'genericable_id',
+            'product_id');
     }
 }

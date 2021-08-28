@@ -225,3 +225,41 @@ Route::get('/n-n', function () {
         echo $order->id . '-' . $order->total.'<br>';
     }
 });
+
+Route::get('polymorph_1_1', function () {
+    $post = \App\Models\Post::find(1);
+    foreach ($post->images as $image) {
+        echo '<img src="'.$image->path.'"/>';
+    }
+
+
+   /* $user = \App\Models\User::find(3);
+    echo '<img src="'.$user->image->path.'"/>';*/
+
+    $product = \App\Models\Product::find(20);
+    foreach ($product->images as $image) {
+        echo '<img src="' . $image->path . '"/>';
+    }
+
+
+});
+
+Route::get('polymorph_n_n', function () {
+    $category = \App\Models\Category::find(1);
+    //dd($category->products);
+    foreach ($category->products as $item) {
+        echo $item->name . '<br>';
+    }
+
+    echo 'Danh mục <br>';
+    $product = \App\Models\Product::find(1);
+  /*  foreach ($product->category as $cat) {
+        echo $cat->name . '<br>';
+    }*/
+
+    echo 'Thuộcd dơn hàng<br>';
+    //dd($product->orders);
+    foreach ($product->orders as $order) {
+        echo $order->id . '<br>';
+    }
+});

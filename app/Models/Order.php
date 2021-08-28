@@ -9,8 +9,16 @@ class Order extends Model
 {
     use HasFactory;
 
+    /*    public function products()
+        {
+            return $this->belongsToMany(Product::class, 'order_products', 'product_id', 'order_id');
+        }*/
+
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_products', 'product_id', 'order_id');
+        return $this->morphToMany(Product::class,
+            'genericable', 'generics',
+            'genericable_id',
+            'product_id');
     }
 }
