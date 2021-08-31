@@ -199,7 +199,7 @@ Route::get('/1-n', function () {
     $category = \App\Models\Category::find(1);
     $products = $category->products;
     foreach ($products as $product) {
-        echo $product->id . '-' . $product->name."<br>";
+        echo $product->id . '-' . $product->name . "<br>";
     }
 });
 
@@ -207,7 +207,7 @@ Route::get('/n-1', function () {
     //$category = \App\Models\Category::find(1);
     $products = \App\Models\Product::all();
     foreach ($products as $product) {
-        echo $product->id . '-' . $product->name . '-danh mục:' . $product->category->name.'<br>';
+        echo $product->id . '-' . $product->name . '-danh mục:' . $product->category->name . '<br>';
     }
 });
 
@@ -222,19 +222,19 @@ Route::get('/n-n', function () {
     $product = \App\Models\Product::find(1);
     $orders = $product->orders;
     foreach ($orders as $order) {
-        echo $order->id . '-' . $order->total.'<br>';
+        echo $order->id . '-' . $order->total . '<br>';
     }
 });
 
 Route::get('polymorph_1_1', function () {
     $post = \App\Models\Post::find(1);
     foreach ($post->images as $image) {
-        echo '<img src="'.$image->path.'"/>';
+        echo '<img src="' . $image->path . '"/>';
     }
 
 
-   /* $user = \App\Models\User::find(3);
-    echo '<img src="'.$user->image->path.'"/>';*/
+    /* $user = \App\Models\User::find(3);
+     echo '<img src="'.$user->image->path.'"/>';*/
 
     $product = \App\Models\Product::find(20);
     foreach ($product->images as $image) {
@@ -253,9 +253,9 @@ Route::get('polymorph_n_n', function () {
 
     echo 'Danh mục <br>';
     $product = \App\Models\Product::find(1);
-  /*  foreach ($product->category as $cat) {
-        echo $cat->name . '<br>';
-    }*/
+    /*  foreach ($product->category as $cat) {
+          echo $cat->name . '<br>';
+      }*/
 
     echo 'Thuộcd dơn hàng<br>';
     //dd($product->orders);
@@ -267,40 +267,40 @@ Route::get('polymorph_n_n', function () {
 Route::get('/collection', function () {
     $a = [1, 2, 3, 4];
     $a = collect($a);
-    $a->each(function ($item,$index) {
+    $a->each(function ($item, $index) {
         echo $item;
     });
 
     $b = $a->map(function ($item, $index) {
-        return $item*2;
+        return $item * 2;
     });
-    $b->each(function ($item,$index) {
+    $b->each(function ($item, $index) {
         echo $item;
     });
 
-   /* $a = [
-        [
-            "name" => "Luan",
-            "age"=>210
-        ],
-        [
-            "name" => "Nam",
-            "age"=>210
-        ]
-    ];
+    /* $a = [
+         [
+             "name" => "Luan",
+             "age"=>210
+         ],
+         [
+             "name" => "Nam",
+             "age"=>210
+         ]
+     ];
 
 
-    $a = collect($a);
-    $b=$a->pluck("name","age");
-    dd($b->toArray());*/
+     $a = collect($a);
+     $b=$a->pluck("name","age");
+     dd($b->toArray());*/
     $a = [1, 2, 3, 4];
     $a = collect($a);
-    $b= $a->filter(function ($item) {
+    $b = $a->filter(function ($item) {
         return $item > 1;
     });
     //dd($b);
     $sum = $a->reduce(function ($total, $item) {
-        return $total+$item;
+        return $total + $item;
     });
 
     echo $sum;
@@ -310,7 +310,7 @@ Route::get('/collection', function () {
         [3, 5, 6]
     ];
     $a = collect($a);
-    $b=$a->flatten(true);
+    $b = $a->flatten(true);
     $b = collect([1, 2, 3, 4]);
     dd($b->x2());
 });
@@ -321,15 +321,31 @@ Route::get('/upload', function () {
 
 Route::post('/do-upload', function (Request $request) {
     $file = $request->file('img');
-   /* $file->store('/imgs', 'public');
-    $file->storeAs('/imgs', time() . $file->getClientOriginalName(), 'public');*/
-    $file->store('/imgs', 'local');
+    /* $file->store('/imgs', 'public');
+     $file->storeAs('/imgs', time() . $file->getClientOriginalName(), 'public');*/
+    //$file->store('/imgs', 'local');
+    $fileName = time() . $file->getClientOriginalName();
+    $file->storeAs('/imgs', $fileName, 'public');
+    $photo = new \App\Models\Photo();
+    $photo->path = '/storage/imgs/' . $fileName;
+    $photo->save();
 })->name('do-upload');
 
 Route::get('/preview-img', function () {
-    return view('preview-image');
+    $photos = \App\Models\Photo::all();
+    $photo = \App\Models\Photo::orderBy('id', 'DESC')->first();
+    return view('preview-image', compact('photos', 'photo'));
+
 });
 
+Route::get('/test', function () {
+    echo 'test';
+})->middleware([\App\Http\Middleware\CheckBrowser::class]);
+
+
+Route::get('/install-chrome', function () {
+    echo 'Vui lòng cài đặt trình duyệt chrome để có thể truy cập vào link này';
+})->name('install-chrome');
 /*
 class Collection{
     private $a;

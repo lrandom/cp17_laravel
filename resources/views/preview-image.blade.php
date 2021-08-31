@@ -9,6 +9,6 @@
     <link rel="stylesheet" href="{{asset('index.css')}}">
 </head>
 <body>
-  <img src="{{asset('/storage/imgs/1630377485212972060_1249234188930028_2411772179844112908_n.png')}}"/>
+<img src="{{asset($photo->path)}}"/>
 </body>
 </html>
