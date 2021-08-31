@@ -263,3 +263,83 @@ Route::get('polymorph_n_n', function () {
         echo $order->id . '<br>';
     }
 });
+
+Route::get('/collection', function () {
+    $a = [1, 2, 3, 4];
+    $a = collect($a);
+    $a->each(function ($item,$index) {
+        echo $item;
+    });
+
+    $b = $a->map(function ($item, $index) {
+        return $item*2;
+    });
+    $b->each(function ($item,$index) {
+        echo $item;
+    });
+
+   /* $a = [
+        [
+            "name" => "Luan",
+            "age"=>210
+        ],
+        [
+            "name" => "Nam",
+            "age"=>210
+        ]
+    ];
+
+
+    $a = collect($a);
+    $b=$a->pluck("name","age");
+    dd($b->toArray());*/
+    $a = [1, 2, 3, 4];
+    $a = collect($a);
+    $b= $a->filter(function ($item) {
+        return $item > 1;
+    });
+    //dd($b);
+    $sum = $a->reduce(function ($total, $item) {
+        return $total+$item;
+    });
+
+    echo $sum;
+
+    $a = [
+        1, 3,
+        [3, 5, 6]
+    ];
+    $a = collect($a);
+    $b=$a->flatten(true);
+    $b = collect([1, 2, 3, 4]);
+    dd($b->x2());
+});
+
+/*
+class Collection{
+    private $a;
+    public function __construct($a1)
+    {
+        $this->a = $a1;
+    }
+
+    public function each($func)
+    {
+        for ($i = 0; $i < count($this->a); $i++) {
+            $func($this->a[$i], $i);
+        }
+    }
+}
+
+function collect($a)
+{
+    return new Collection($a);
+}
+$a1 = [1, 2, 3, 4];
+$c =collect($a1);
+$c->each(function ($item,$i) {
+
+});
+*/
+
+?>
