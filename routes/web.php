@@ -315,6 +315,21 @@ Route::get('/collection', function () {
     dd($b->x2());
 });
 
+Route::get('/upload', function () {
+    return view('upload');
+});
+
+Route::post('/do-upload', function (Request $request) {
+    $file = $request->file('img');
+   /* $file->store('/imgs', 'public');
+    $file->storeAs('/imgs', time() . $file->getClientOriginalName(), 'public');*/
+    $file->store('/imgs', 'local');
+})->name('do-upload');
+
+Route::get('/preview-img', function () {
+    return view('preview-image');
+});
+
 /*
 class Collection{
     private $a;
