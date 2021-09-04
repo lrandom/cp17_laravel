@@ -52,9 +52,27 @@ Route::get('/next', function () {
 });
 
 Route::get('/send-mail', function () {
-   // \Illuminate\Support\Facades\Mail::to('mmochicken92@gmail.com')->send(new \App\Mail\ConfirmOrder("Nội dung"));
-   // \Illuminate\Support\Facades\Mail::to('mmochicken92@gmail.com')->send(new \App\Mail\CancelOrder());
-  //  for ($i = 0; $i < 5; $i++) {
-        dispatch(new \App\Jobs\SendMail());
+    // \Illuminate\Support\Facades\Mail::to('mmochicken92@gmail.com')->send(new \App\Mail\ConfirmOrder("Nội dung"));
+    // \Illuminate\Support\Facades\Mail::to('mmochicken92@gmail.com')->send(new \App\Mail\CancelOrder());
+    //  for ($i = 0; $i < 5; $i++) {
+    dispatch(new \App\Jobs\SendMail());
     //}
+});
+
+Route::get('/translate', function () {
+    return view('translate');
+});
+
+Route::get('change-language', function (\Illuminate\Http\Request $request) {
+    $lang = $request->lang;
+    //dd($lang);
+    \Illuminate\Support\Facades\App::setLocale($lang);
+    return view('translate');
+});
+
+
+Route::get('update-token', function () {
+    \Illuminate\Support\Facades\DB::table('users')->where('id', 2)->update([
+         'api_token'=>\Illuminate\Support\Str::random()
+    ]);
 });
